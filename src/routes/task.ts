@@ -1,11 +1,11 @@
 import { Router } from "express";
 
-const router = Router();
+const routeTask = Router();
 
-router.get("/", () => {console.log('Pegar todas as tarefas')})
-router.get("/:id", () => {console.log('Pegar uma tarefa')})
-router.post("/", () => {console.log('cadastrar uma tarefa')})
-router.put("/:id", () => {console.log('atualizar uma tarefa')})
-router.delete("/:id", () => {console.log('deletar uma tarefa')})
+routeTask.get("/", () => {console.log('Pegar todas as tarefas')})
+routeTask.get("/:id", () => {console.log('Pegar uma tarefa')})
+routeTask.post("/", () => {console.log('cadastrar uma tarefa')})
+routeTask.put("/:id", () => {console.log('atualizar uma tarefa')})
+routeTask.delete("/:id", () => {console.log('deletar uma tarefa')})
 
 export default router;
