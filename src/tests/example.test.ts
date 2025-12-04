@@ -59,7 +59,7 @@ test("PUT: /task/id = 201", async () => {
 })
  
 // DeleteTask
-test("DELETE: /task/id = 201", async () => {
+test("DELETE: /task/id = 200", async () => {
     const res = await fetch(`${URL_BASE}/${taskId}`,{
         method: "DELETE"
     })
