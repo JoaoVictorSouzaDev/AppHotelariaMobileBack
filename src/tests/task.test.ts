@@ -1,4 +1,4 @@
-const URL_BASE:string = "http://localhost:3000/task"
+const URL_TASK:string = "http://localhost:3000/task"
 
 let taskId:number = 0
 
@@ -14,7 +14,7 @@ let updateTask = {
 
 // GetAllTasks
 test("GET: /task = 200", async () => {
-    const res = await fetch(URL_BASE)
+    const res = await fetch(URL_TASK)
     expect(res.status).toBe(200)
     const body = await res.json()
     expect(Array.isArray(body)).toBe(true)
@@ -22,7 +22,7 @@ test("GET: /task = 200", async () => {
 
 // CreateTask
 test("POST: /task = 201", async () => {
-    const res = await fetch(URL_BASE, {
+    const res = await fetch(URL_TASK, {
         method: "POST",
         headers:{"Content-Type": "application/json"},
         body: JSON.stringify(newTask)
@@ -38,7 +38,7 @@ test("POST: /task = 201", async () => {
 
 // GetTaskById
 test("GET: /task/id = 200", async () => {
-    const res = await fetch(`${URL_BASE}/${taskId}`)
+    const res = await fetch(`${URL_TASK}/${taskId}`)
     expect(res.status).toBe(200)
     const cont = await res.json()
     expect(cont).toHaveProperty("name", newTask['name']) 
@@ -47,7 +47,7 @@ test("GET: /task/id = 200", async () => {
 
 // UpdateTask
 test("PUT: /task/id = 201", async () => {
-    const res = await fetch(`${URL_BASE}/${taskId}`, {
+    const res = await fetch(`${URL_TASK}/${taskId}`, {
         method: "PUT",
         headers:{"Content-Type": "application/json"},
         body: JSON.stringify(updateTask)
@@ -60,7 +60,7 @@ test("PUT: /task/id = 201", async () => {
  
 // DeleteTask
 test("DELETE: /task/id = 200", async () => {
-    const res = await fetch(`${URL_BASE}/${taskId}`,{
+    const res = await fetch(`${URL_TASK}/${taskId}`,{
         method: "DELETE"
     })
     expect(res.status).toBe(200)

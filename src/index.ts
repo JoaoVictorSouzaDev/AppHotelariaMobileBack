@@ -1,5 +1,8 @@
 import app from "./app";
+import dotenv from "dotenv"
 
-const PORT = 3000;
+dotenv.config()
+
+const PORT = parseInt(process.env.PORT!);
 
 app.listen(PORT, () => console.log(`Server is working: ${PORT}`));
