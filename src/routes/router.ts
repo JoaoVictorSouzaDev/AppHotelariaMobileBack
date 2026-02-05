@@ -1,13 +1,13 @@
 import { Router } from "express";
 import routeTask from "./task";
-import routeLogin from "./login";
+import routeClient from "./client";
 import { createJWT } from "../utils/jwt";
 import { middleware } from "./jwtMiddleware";
 
 const handleRouter = Router();
 
 handleRouter.use("/task", routeTask);
-handleRouter.use("/api/login", routeLogin);
+handleRouter.use("/api/client/", routeClient);
 
 handleRouter.use("/jwt", (req, res) => {
     const payload = {id: 123, nome: "teste", cargo: "cliente"}
