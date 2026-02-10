@@ -14,6 +14,7 @@ async function login(req:Request, res:Response, next:NextFunction) {
   try {
 
     const result = await clientRepository.login(email)
+
     if (!result) {throw new Error();}
 
     const resultPassword = await validatePassword(senha, result.senha);
@@ -27,7 +28,7 @@ async function login(req:Request, res:Response, next:NextFunction) {
 
   }
   catch(error) {
-    return res.sendStatus(400).json({erro:"Dados invalidos"})
+    return res.status(400).json({erro:"Dados invalidos"})
   }
 }
 
@@ -38,13 +39,13 @@ async function createClient(req: Request, res: Response, next: NextFunction) {
     return res.status(400).json({ erro: "Todos os campos são obrigatórios" });
   }
 
-  if (nome.trim() === "" || email.trim() === "" || senha.trim() === "") {
+  if (nome.trim() === "" || email.trim() === "" || senha.trim() === "" || cpf.trim() === "" || telefone.trim() === "") {
     return res.status(400).json({ erro: "Campos não podem ser vazios" });
   }
 
+
   try {
     const hash = await generatePassword(senha);
-
     const result = await clientRepository.createClient(nome, email, hash, cpf, telefone);
 
     if (!result) {
@@ -54,8 +55,36 @@ async function createClient(req: Request, res: Response, next: NextFunction) {
     const { senha: _senha, ...usuario } = result;
     const token = createJWT(usuario);
 
-    return res.status(201).json(token);
-    
+    return res.status(201).json(token); 
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ erro: "Erro interno no servidor" });
+  } 
+}
+
+
+async function updateClient(req: Request, res: Response, next: NextFunction) {
+  const { id } = req.params;
+  const data = req.body;
+
+  if (Object.keys(data).length === 0) {
+    return res.status(400).json({ erro: "Nenhum dado fornecido para atualização" });
+  }
+
+  try {
+    const result = await clientRepository.updateClient(parseInt(id), data);
+
+    console.log(result)
+
+    if (result.affectedRows === 0 ) {
+      return res.status(404).json({ erro: "Cliente não encontrado" });
+    }
+
+    return res.status(200).json({ 
+      mensagem: "Cliente atualizado com sucesso",
+      dadosAtualizados: data 
+    });
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({ erro: "Erro interno no servidor" });
@@ -63,5 +92,5 @@ async function createClient(req: Request, res: Response, next: NextFunction) {
 }
 
 export default {
-  login, createClient
+  login, createClient, updateClient
 }

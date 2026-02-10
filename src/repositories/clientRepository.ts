@@ -9,14 +9,12 @@ async function login(email:string) {
             clientes.email,
             clientes.senha,
             funcoes.nome
-        AS 
-            cargo
         FROM
             clientes
         JOIN 
             funcoes
         ON 
-            clientes.fk_funcoes = cargo.id
+            clientes.fk_funcoes = funcoes.id
         WHERE
             clientes.email = ?
     `;
@@ -33,7 +31,7 @@ async function createClient(nome: string, email: string, senha: string, cpf: str
             (?, ?, ?, ?, ?)
     `;
 
-    const [result] = await pool.query(sql, [nome, email, senha]);
+    const [result] = await pool.query(sql, [nome, email, senha, telefone, cpf]);
 
     return {
         id: (result as any).insertId,
@@ -45,6 +43,27 @@ async function createClient(nome: string, email: string, senha: string, cpf: str
     };
 }
 
+async function updateClient(id:number, data: any) {
+
+    console.log(id)
+
+    const keys = Object.keys(data);
+    const camposSql = keys.map(item => `${item} = ?`).join(", ")
+
+    const sql = `
+        UPDATE 
+            clientes
+        SET
+            ${camposSql}
+        WHERE
+            id = ?
+    `;
+
+    const [result] = await pool.query(sql, [...keys.map(key => data[key]), id]);
+    return result as any;
+
+}
+
 export default {
-    login, createClient
+    login, createClient, updateClient
 }
