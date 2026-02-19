@@ -22,7 +22,6 @@ test("POST: api/login = 201", async () => {
     })
     expect(res.status).toBe(201) 
     const json = await res.json()
-    console.log("Token de login: ")
     console.log(json)
 }) 
 

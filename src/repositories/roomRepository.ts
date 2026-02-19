@@ -1,11 +1,13 @@
 import {pool} from "../database/database";
-import {Room} from "../models/roomModel";
+import {Room,} from "../models/roomModel";
+import { RowDataPacket } from "mysql2";
 
 async function getAvaibleRooms(inicio: string, fim: string, qtdPessoas: number) {
     const sql = `
         SELECT
             q.id,
             q.nome,
+            q.numero,
             q.qtd_cama_casal,
             q.qtd_cama_solteiro,
             q.preco,
@@ -31,6 +33,24 @@ async function getAvaibleRooms(inicio: string, fim: string, qtdPessoas: number) 
     return rows;
 }
 
+async function searchPhotoById(id: number) {
+    const sql = `
+        SELECT 
+            i.nome
+        FROM
+            imagens_quartos iq
+        JOIN
+            imagens i
+        ON
+            iq.fk_imagens = i.id
+        WHERE
+            iq.fk_quartos = ?;
+    `;
+
+    const [fotos] = await pool.query<RowDataPacket[]>(sql, [id]);
+    return fotos.map(foto => foto.nome);
+}
+
 export default {
-    getAvaibleRooms
+    getAvaibleRooms, searchPhotoById
 }
