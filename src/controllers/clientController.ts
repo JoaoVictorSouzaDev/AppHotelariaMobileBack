@@ -5,7 +5,7 @@ import { createJWT } from "../utils/jwt";
 import { generatePassword } from "../utils/password";
 
 async function login(req:Request, res:Response, next:NextFunction) {
-  const{email, senha} = req.body;
+  let {email, senha} = req.body;
 
   if(!email || !senha) {return res.status(400).json({erro:"Dados invalidos"})}
 
@@ -28,7 +28,7 @@ async function login(req:Request, res:Response, next:NextFunction) {
 
   }
   catch(error) {
-    return res.status(400).json({erro:"Dados invalidos"})
+    return res.status(404).json({erro:"Dados invalidos"})
   }
 }
 
