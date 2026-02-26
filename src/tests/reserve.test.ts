@@ -24,16 +24,17 @@ test("POST: /api/reserve = 201", async () => {
         },
         body: JSON.stringify({
             pagamento: "Pix",
+            adicionais: 1,
             quartos: [
                 {
                     id: 30,
-                    dataInicio: "2024-07-01",
-                    dataFim: "2024-07-10",
+                    inicio: "2024-07-01",
+                    fim: "2024-07-10",
                 },
                 {
                     id: 29,
-                    dataInicio: "2024-07-01",
-                    dataFim: "2024-07-10",
+                    inicio: "2024-07-01",
+                    fim: "2024-07-10",
                 }
             ]
         })

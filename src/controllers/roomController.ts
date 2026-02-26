@@ -1,22 +1,27 @@
 import { Request, Response, NextFunction } from "express";
 import roomRepository from "../repositories/roomRepository";
 import { Room } from "../models/roomModel";
+import {corrigirDataHora} from "../utils/dataHora";
 
 async function getAvaibleRooms(req: Request, res: Response, next: NextFunction) {
-    const { inicio, fim, qtdPessoas } = req.body;
+    let { inicio, fim, qtdPessoas } = req.body;
 
     if (!inicio || !fim || !qtdPessoas) {
         return res.status(400).json({ erro: "Todos os campos são obrigatórios" });
     }
 
+    inicio = await corrigirDataHora(inicio, 14)
+    fim = await corrigirDataHora(fim, 12)
+
     try {
-        const rooms: Room[] = await roomRepository.getAvaibleRooms(inicio, fim, qtdPessoas);
+        const rooms:Room[] = await roomRepository.getAvaibleRooms(inicio, fim, qtdPessoas);
 
         if (!rooms || rooms.length === 0) {
             return res.status(404).json({ mensagem: "Nenhum quarto disponível encontrado." });
         }
 
         const formattedRooms = await Promise.all(rooms.map(async (room) => {
+
             try {
                 const fotos = await roomRepository.searchPhotoById(room.id);
                 

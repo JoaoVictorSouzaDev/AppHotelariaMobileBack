@@ -1,14 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import reserveRepository from "../repositories/reserveRepository";
-
-
-
+import {corrigirDataHora} from "../utils/dataHora";
 
 async function createRequest(req: Request, res: Response, next: NextFunction) {
-    const token = req.payload;
-    const {pagamento, quartos} = req.body
+    const token = (req as any).payload;
+    const {pagamento, adicionais, quartos} = req.body
 
-    if (!token.id || !pagamento || !quartos) {
+    if (!token.id || !pagamento || !quartos || !adicionais) {
         return res.status(400).json({ message: "Missing required fields" });
     }
 
@@ -25,7 +23,9 @@ async function createRequest(req: Request, res: Response, next: NextFunction) {
         let result = []
 
         for (let q of quartos) {
-            const reserveId = await reserveRepository.createReserve(pedidoId, q);
+            q.inicio = await corrigirDataHora(q.inicio, 14);
+            q.fim = await corrigirDataHora(q.fim, 12);
+            const reserveId = await reserveRepository.createReserve(pedidoId, q, adicionais);
             if (!reserveId) {continue}
 
             result.push({

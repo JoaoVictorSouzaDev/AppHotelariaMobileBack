@@ -23,20 +23,21 @@ async function createRequests(data:any) {
     }
 }
 
-async function createReserve(idReserve:number, room:any) {
+async function createReserve(idReserve:number, room:any, adicionais:number) {
     const sql = `
         INSERT INTO 
-            reservas (fim, inicio, fk_pedidos, fk_quartos)
+            reservas (fim, inicio, fk_pedidos, fk_quartos, fk_adicionais)
         VALUES
-            (?, ?, ?, ?)
+            (?, ?, ?, ?, ?)
     `
 
     try {
         const [result]= await pool.query<ResultSetHeader>(sql, [
-            room.dataInicio,
-            room.dataFim,
+            room.inicio,
+            room.fim,
             idReserve,
-            room.id
+            room.id,
+            adicionais
         ]);
 
         return result.insertId;
