@@ -28,7 +28,7 @@ async function login(req:Request, res:Response, next:NextFunction) {
 
   }
   catch(error) {
-    return res.status(404).json({erro:"Dados invalidos"})
+    return res.status(404).json({erro:"Erro ao realizar login"})
   }
 }
 
