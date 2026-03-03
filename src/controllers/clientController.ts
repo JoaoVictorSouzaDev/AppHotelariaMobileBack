@@ -33,9 +33,10 @@ async function login(req:Request, res:Response, next:NextFunction) {
 }
 
 async function createClient(req: Request, res: Response, next: NextFunction) {
+
   const { nome, email, senha, cpf, telefone } = req.body;
 
-  if (!nome || !email || !senha || !cpf || !telefone) {
+  if (!email || !senha || !cpf || !telefone) {
     return res.status(400).json({ erro: "Todos os campos são obrigatórios" });
   }
 
@@ -43,6 +44,7 @@ async function createClient(req: Request, res: Response, next: NextFunction) {
     return res.status(400).json({ erro: "Campos não podem ser vazios" });
   }
 
+  console.log(nome, email, senha, cpf, telefone)
 
   try {
     const hash = await generatePassword(senha);
@@ -73,8 +75,6 @@ async function updateClient(req: Request, res: Response, next: NextFunction) {
 
   try {
     const result = await clientRepository.updateClient(parseInt(id), data);
-
-    console.log(result)
 
     if (result.affectedRows === 0 ) {
       return res.status(404).json({ erro: "Cliente não encontrado" });
