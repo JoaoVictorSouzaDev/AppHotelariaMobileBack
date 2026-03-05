@@ -44,7 +44,7 @@ async function getAvaibleRooms(req: Request, res: Response, next: NextFunction) 
 
     } catch (error) {
         console.error("ERRO NO CONTROLLER:", error);
-        return res.status(500).json({ erro: "Erro interno no servidor" });
+        return res.status(505).json({ erro: "Erro interno no servidor" });
     }
 }
 

@@ -7,7 +7,7 @@ let Login = {
 test("POST: /api/reserve = 201", async () => {
 
     //Login
-    const res = await fetch("http://localhost:3000/api/client/login", {
+    const res = await fetch("https://app-hotelaria-mobile-back-six.vercel.app/api/client/login", {
         method: "POST",
         headers:{"Content-Type": "application/json"},
         body: JSON.stringify(Login)
@@ -16,7 +16,7 @@ test("POST: /api/reserve = 201", async () => {
     const token = await res.json()
 
     //Reserva
-    const resp = await fetch("http://localhost:3000/api/reserve", {
+    const resp = await fetch("https://app-hotelaria-mobile-back-six.vercel.app/api/reserve", {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",

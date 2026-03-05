@@ -1,4 +1,4 @@
-const URL_ROOMS: string = "http://localhost:3000/api/room";
+const URL_ROOMS: string = "https://app-hotelaria-mobile-back-six.vercel.app/api/room";
 
 let searchParams = {
     inicio: "2024-12-20",

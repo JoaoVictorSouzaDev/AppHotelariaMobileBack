@@ -1,4 +1,4 @@
-const URL_LOGIN:string = "http://localhost:3000/api/client/login"
+const URL_LOGIN:string = "https://app-hotelaria-mobile-back-six.vercel.app/api/client/login"
 
 let newLogin = {
     email: "Uira@gmail.com",
@@ -6,9 +6,9 @@ let newLogin = {
 }
 
 let newClient = {
-    nome: "Nome100%atualizado5",
-    email: "Uira3000@gmail.com",
-    telefone: "telefone100%atualizado5",
+    nome: "Nome100%atualizado54324",
+    email: "Uira3000234@gmail.com",
+    telefone: "telefone102340%atualizado5",
 }
 
 let clientId:number = 5
@@ -26,7 +26,7 @@ test("POST: api/login = 201", async () => {
 }) 
 
 test("POST: api/client = 201", async () => {
-        const res = await fetch("http://localhost:3000/api/client", {
+        const res = await fetch("https://app-hotelaria-mobile-back-six.vercel.app/api/client", {
         method: "POST",
         headers:{"Content-Type": "application/json"},
         body: JSON.stringify(newClient)
@@ -38,7 +38,7 @@ test("POST: api/client = 201", async () => {
 })
 
 test("POST: api/client/id = 201", async () => {
-        const res = await fetch(`http://localhost:3000/api/client/${clientId}`, {
+        const res = await fetch(`https://app-hotelaria-mobile-back-six.vercel.app/api/client/${clientId}`, {
         method: "PUT",
         headers:{"Content-Type": "application/json"},
         body: JSON.stringify(newClient)
