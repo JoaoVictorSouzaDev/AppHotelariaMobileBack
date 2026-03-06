@@ -1,7 +1,6 @@
 PORT=3000
 JWT_SECRET=senha123
 
-
 DB_PORT=26969
 DB_HOST=shortline.proxy.rlwy.net
 DB_USER=root

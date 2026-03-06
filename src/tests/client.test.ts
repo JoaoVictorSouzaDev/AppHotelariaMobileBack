@@ -6,9 +6,10 @@ let newLogin = {
 }
 
 let newClient = {
-    nome: "Nome100%atualizado54324",
-    email: "Uira3000234@gmail.com",
-    telefone: "telefone102340%atualizado5",
+    nome: "nomeeewge321gr",
+    email: "emaillllgh123123w",
+    telefone: "telefoneeew123gr",
+    senha: "435223234"
 }
 
 let clientId:number = 5

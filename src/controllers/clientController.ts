@@ -44,7 +44,6 @@ async function createClient(req: Request, res: Response, next: NextFunction) {
     return res.status(400).json({ erro: "Campos não podem ser vazios" });
   }
 
-  console.log(nome, email, senha, cpf, telefone)
 
   try {
     const hash = await generatePassword(senha);
@@ -74,19 +73,27 @@ async function updateClient(req: Request, res: Response, next: NextFunction) {
   }
 
   try {
+    if (data.senha) {
+      data.senha = await generatePassword(data.senha);
+      console.log("-----------------------------------------------------------")
+      console.log(data.senha);
+      console.log("-----------------------------------------------------------")
+    }
+
+    console.log("pasoouuuuu")
+
     const result = await clientRepository.updateClient(parseInt(id), data);
 
-    if (result.affectedRows === 0 ) {
+    if (result.affectedRows === 0) {
       return res.status(404).json({ erro: "Cliente não encontrado" });
     }
 
     return res.status(200).json({ 
       mensagem: "Cliente atualizado com sucesso",
-      dadosAtualizados: data 
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("ERRO NO UPDATE_CLIENT BACKEND:", error);
     return res.status(500).json({ erro: "Erro interno no servidor" });
   }
 }
